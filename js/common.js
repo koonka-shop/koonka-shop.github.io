@@ -1,28 +1,15 @@
 $(function() {
 	$.Admin.app.activate();
-	$.Admin.HeaderSearchBtn.activate();
+	$.Admin.HeaderSearchModile.activate();
 });
 jQuery(document).ready(function( $ ) {
 	$("#menu").mmenu({
-		 "navbar": {
-				title: "Меню"
-		 },
-		 "counters": true,
-		 "searchfield" : {
-				placeholder: 'Поиск по меню...',
-				noResults: "Ничего не найденно..."
-		 },
-		"extensions": [
-				"theme-white",
-				"pagedim-black",
-				"position-right",
-				"fx-menu-slide",
-				"fx-listitems-fade",
-		 ],
-		 "navbars": [
-				{
-					 content: [ 'searchfield' ]
-				},
+		extensions: [ "position-front", "pagedim-black", "position-right", "theme-white", "fx-menu-fade", "fx-listitems-fade" ],
+		navbar: {
+			title: "Меню"
+		},
+		 navbars: [
+				{ content: [ 'searchfield' ] },
 				{
 					 "position": "top",
 					 "content": [
@@ -38,8 +25,30 @@ jQuery(document).ready(function( $ ) {
 							"<a class='fa fa-facebook' href='#/'></a>"
 					 ]
 				}
-		 ]
-	});
+		 ],
+		 counters: true,
+		 searchfield: {
+				placeholder: 'Поиск по Каталогу...',
+				panel: {
+					add: true,
+					dividers: true,
+					title:"Результаты поиска"
+				},
+				noResults: "Пусто :(",
+				showSubPanels: false
+		 },
+		
+	},
+	{
+		searchfield: {
+			clear: true,
+		}
+	}
+);
+
+
+
+
 });
 
 
@@ -53,7 +62,7 @@ $.Admin.options = {
 
 $.Admin.app = {
 	activate: function() {
-
+		
 	},
 	overlay: function() {
 		$('<div>', {
@@ -68,18 +77,22 @@ $.Admin.app = {
 }
 
 
-$.Admin.HeaderSearchBtn = {
+$.Admin.HeaderSearchModile = {
 	activate: function() {
-		$(".search-mobileBtn").on("click", function(event) {
-			$.Admin.app.overlay();
-			$(".searchFormPopup").fadeIn();
-		});
-		$(document).mouseup(function (e){ // событие клика по веб-документу
-			var div = $(".searchFormPopup"); // тут указываем ID элемента
-			if (!div.is(e.target) // если клик был не по нашему блоку
-					&& div.has(e.target).length === 0) { // и не по его дочерним элементам
-				div.fadeOut() // скрываем его
+		$("body header .search").on("click", function(event) {
+			var windowWidth = $(window).width();
+			if(windowWidth <= 480){
+				$(this).addClass('open');
 			}
 		});
+
+		$(document).mouseup(function (e){ // событие клика по веб-документу
+			var div = $("body header .search"); // тут указываем ID элемента
+			if (!div.is(e.target) && div.has(e.target).length === 0) { // и не по его дочерним элементам
+				div.removeClass('open'); // скрываем его
+			}
+		});
+
+
 	}
 }
