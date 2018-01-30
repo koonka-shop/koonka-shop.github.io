@@ -44,10 +44,21 @@ jQuery(document).ready(function( $ ) {
 			clear: true,
 		}
 	}
-);
+	);
 
 
+$(".owl-carousel").owlCarousel({
+		loop: !1,
+		items: 1,
+		dots: !0,
+		margin: 1,
+		nav: !1,
+		smartSpeed: 700
+	});
 
+	$(".parallax").myParallax({
+		"speed" : "15"
+	});
 
 });
 
